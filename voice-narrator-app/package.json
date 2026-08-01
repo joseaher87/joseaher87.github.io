@@ -7,9 +7,40 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder",
+    "shortcut:win": "powershell -ExecutionPolicy Bypass -File scripts/create-desktop-shortcut-windows.ps1",
+    "shortcut:mac": "bash scripts/create-desktop-shortcut-macos.sh",
+    "shortcut:linux": "bash scripts/create-desktop-shortcut-linux.sh"
   },
   "devDependencies": {
-    "electron": "^31.0.0"
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "io.github.joseaher87.narradordevoz",
+    "productName": "Narrador de Voz",
+    "directories": {
+      "buildResources": "build"
+    },
+    "files": ["main.js", "preload.js", "index.html", "renderer.js", "styles.css"],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": ["nsis"]
+    },
+    "nsis": {
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "Narrador de Voz"
+    },
+    "mac": {
+      "icon": "build/icon.icns",
+      "target": ["dmg"]
+    },
+    "linux": {
+      "icon": "build/icons",
+      "target": ["AppImage", "deb"],
+      "category": "AudioVideo"
+    }
   }
 }

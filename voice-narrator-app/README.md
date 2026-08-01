@@ -13,15 +13,68 @@ npm start
 
 Requiere Node.js 18+. La primera vez, `npm install` descarga Electron (puede tardar un poco).
 
-## Empaquetarla como instalable (opcional)
+## Icono de la app
 
-Este proyecto no incluye un empaquetador por defecto. Para generar un `.exe` / `.dmg` / `.AppImage`
-puedes agregar [electron-builder](https://www.electron.build/):
+El icono distintivo (microfono blanco con ondas de sonido sobre degradado morado-azul y una
+insignia "ES") esta en `build/icon.svg`. A partir de ese SVG se generan los formatos que necesita
+cada plataforma con:
 
 ```bash
-npm install --save-dev electron-builder
-npx electron-builder
+pip install cairosvg pillow
+python3 scripts/build-icons.py
 ```
+
+Esto regenera `build/icon.png`, `build/icon.ico`, `build/icon.icns` y `build/icons/*.png`. Estos
+archivos ya estan versionados en el repo, asi que normalmente no hace falta volver a generarlos,
+salvo que cambies el diseno del icono.
+
+## Crear el acceso directo en el Escritorio
+
+> Esta app se desarrolla en una sesion en la nube, que no tiene acceso al Escritorio real de tu
+> computadora. Por eso el acceso directo se crea corriendo uno de estos scripts **en tu propia
+> maquina**, despues de clonar el repo y hacer `npm install` dentro de `voice-narrator-app`.
+
+**Linux**
+
+```bash
+npm run shortcut:linux
+```
+
+Crea `~/Desktop/narrador-de-voz.desktop` con el icono propio y tambien lo registra en el menu de
+aplicaciones. Si el icono no aparece o no abre con doble clic, clic derecho sobre el acceso
+directo > "Permitir lanzamiento" (el texto exacto depende de tu entorno de escritorio).
+
+**Windows**
+
+```powershell
+npm run shortcut:win
+```
+
+Crea `Narrador de Voz.lnk` en el Escritorio, apuntando al Electron local del proyecto y usando
+`build/icon.ico` como icono.
+
+**macOS**
+
+```bash
+npm run shortcut:mac
+```
+
+Genera `Narrador de Voz.app` (con `build/icon.icns` como icono) dentro de `dist/mac` usando
+electron-builder, y coloca un alias de esa app en el Escritorio.
+
+## Empaquetarla como instalable (opcional)
+
+El proyecto ya incluye [electron-builder](https://www.electron.build/) configurado (ver la clave
+`"build"` en `package.json`), con los iconos de `build/` para Windows, macOS y Linux. Para generar
+un instalable para tu plataforma actual:
+
+```bash
+npm run dist
+```
+
+En Windows esto genera un instalador NSIS que, ademas, crea automaticamente el acceso directo de
+Escritorio (y de menu inicio) al instalarse — es una alternativa a `npm run shortcut:win` para
+cuando prefieras distribuir la app ya empaquetada en vez de ejecutarla desde el codigo fuente.
 
 ## Funcionalidad
 
@@ -84,10 +137,20 @@ y aplicarle nodos de procesamiento (`ConvolverNode`, `DelayNode`, `BiquadFilterN
 
 ```
 voice-narrator-app/
-├── main.js        # Proceso principal de Electron (ventana + menu "Efectos")
-├── preload.js      # Puente seguro entre el menu nativo y la interfaz web
-├── index.html       # Interfaz de usuario
-├── renderer.js      # Logica de sintesis de voz, voces y efectos
-├── styles.css       # Estilos
-└── package.json
+├── main.js                                     # Proceso principal de Electron (ventana + menu "Efectos")
+├── preload.js                                   # Puente seguro entre el menu nativo y la interfaz web
+├── index.html                                    # Interfaz de usuario
+├── renderer.js                                   # Logica de sintesis de voz, voces y efectos
+├── styles.css                                    # Estilos
+├── package.json
+├── build/
+│   ├── icon.svg                                  # Icono fuente (vector)
+│   ├── icon.png / icon.ico / icon.icns           # Icono exportado por plataforma
+│   └── icons/                                    # Icono en varios tamanos (Linux)
+└── scripts/
+    ├── build-icons.py                            # Genera los icon.* a partir de icon.svg
+    ├── launch.sh                                 # Lanzador usado por el acceso directo de Linux
+    ├── create-desktop-shortcut-linux.sh
+    ├── create-desktop-shortcut-windows.ps1
+    └── create-desktop-shortcut-macos.sh
 ```

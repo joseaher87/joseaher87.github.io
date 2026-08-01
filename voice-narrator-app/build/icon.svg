@@ -1,0 +1,52 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a2f6b"/>
+      <stop offset="55%" stop-color="#5c4de0"/>
+      <stop offset="100%" stop-color="#7c9dff"/>
+    </linearGradient>
+    <linearGradient id="mic" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e9ecff"/>
+    </linearGradient>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0b0d24" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- App-icon squircle background -->
+  <rect x="0" y="0" width="1024" height="1024" rx="228" fill="url(#bg)"/>
+
+  <!-- Outer soft glow ring -->
+  <circle cx="512" cy="486" r="330" fill="#ffffff" opacity="0.06"/>
+
+  <!-- Sound waves, left -->
+  <g stroke="#ffffff" stroke-linecap="round" fill="none" opacity="0.9">
+    <path d="M 300 420 Q 250 486 300 552" stroke-width="26"/>
+    <path d="M 236 372 Q 156 486 236 600" stroke-width="26" opacity="0.75"/>
+    <path d="M 172 324 Q 62 486 172 648" stroke-width="26" opacity="0.55"/>
+  </g>
+
+  <!-- Sound waves, right (mirrored) -->
+  <g stroke="#ffffff" stroke-linecap="round" fill="none" opacity="0.9">
+    <path d="M 724 420 Q 774 486 724 552" stroke-width="26"/>
+    <path d="M 788 372 Q 868 486 788 600" stroke-width="26" opacity="0.75"/>
+    <path d="M 852 324 Q 962 486 852 648" stroke-width="26" opacity="0.55"/>
+  </g>
+
+  <!-- Microphone -->
+  <g filter="url(#soft)">
+    <rect x="432" y="230" width="160" height="330" rx="80" fill="url(#mic)"/>
+    <rect x="432" y="230" width="160" height="330" rx="80" fill="none" stroke="#c7cdf7" stroke-width="6"/>
+    <path d="M 350 470 a 162 162 0 0 0 324 0" stroke="#ffffff" stroke-width="34" stroke-linecap="round" fill="none"/>
+    <rect x="492" y="628" width="40" height="120" rx="18" fill="#ffffff"/>
+    <rect x="410" y="748" width="204" height="40" rx="20" fill="#ffffff"/>
+  </g>
+
+  <!-- Small "ES" language badge -->
+  <g>
+    <circle cx="740" cy="742" r="86" fill="#ff7a45"/>
+    <circle cx="740" cy="742" r="86" fill="none" stroke="#2a2f6b" stroke-width="10"/>
+    <text x="740" y="770" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700" fill="#ffffff" text-anchor="middle">ES</text>
+  </g>
+</svg>
