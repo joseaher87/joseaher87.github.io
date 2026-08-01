@@ -3,6 +3,19 @@
 Aplicacion de escritorio (Electron) para narrar texto en voz alta, con seleccion de voz
 (incluyendo voces en espanol como "Jorge") y un menu de efectos para transformar como suena.
 
+## Generacion de voz 100% local
+
+La voz se genera enteramente en tu maquina, sin internet: la app usa `speechSynthesis` (Web
+Speech API), que llama directamente al motor de texto a voz del sistema operativo (SAPI en
+Windows, `NSSpeechSynthesizer` en macOS, `espeak-ng` o similar en Linux). No hay ningun `fetch`
+ni SDK de nube en el codigo, y `index.html` define una Content-Security-Policy
+(`default-src 'self'`) que bloquea a nivel de navegador cualquier conexion de red que no sea a
+los propios archivos de la app. Puedes comprobarlo desconectando el wifi/ethernet: la narracion
+sigue funcionando igual.
+
+Esto tambien significa que las voces disponibles dependen de lo que tengas instalado localmente
+(ver la seccion "Sobre las voces del sistema" mas abajo) — la app no descarga voces nuevas.
+
 ## Como ejecutarla
 
 ```bash

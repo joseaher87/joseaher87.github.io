@@ -33,8 +33,19 @@ body {
 }
 
 .subtitle {
-  margin: 0 0 20px;
+  margin: 0 0 8px;
   color: var(--muted);
+}
+
+.offline-badge {
+  display: inline-block;
+  margin: 0 0 20px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #1d3a2a;
+  border: 1px solid #2f5a3f;
+  color: #8fe0ab;
+  font-size: 12px;
 }
 
 .layout {
