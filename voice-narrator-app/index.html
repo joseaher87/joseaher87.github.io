@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'" />
+    <title>Narrador de Voz</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <h1>Narrador de Voz</h1>
+        <p class="subtitle">Escribe un texto, elige una voz en espanol y aplica efectos.</p>
+      </header>
+
+      <main class="layout">
+        <section class="panel text-panel">
+          <label for="text-input">Texto a narrar</label>
+          <textarea id="text-input" placeholder="Escribe o pega aqui el texto que quieres escuchar...">Hola, esta es una prueba del narrador de voz. Selecciona una voz en espanol, por ejemplo la voz de Jorge, y elige un efecto para transformar como suena.</textarea>
+
+          <div class="text-actions">
+            <label class="file-btn">
+              Abrir archivo .txt
+              <input type="file" id="file-input" accept=".txt" hidden />
+            </label>
+            <span class="char-count" id="char-count">0 caracteres</span>
+          </div>
+        </section>
+
+        <section class="panel voice-panel">
+          <div class="field">
+            <label for="voice-select">Voz</label>
+            <select id="voice-select"></select>
+            <p class="hint" id="voice-hint"></p>
+          </div>
+
+          <div class="transport">
+            <button id="btn-play" class="btn primary">Reproducir</button>
+            <button id="btn-pause" class="btn" disabled>Pausar</button>
+            <button id="btn-stop" class="btn" disabled>Detener</button>
+          </div>
+          <p class="status" id="status">Listo.</p>
+        </section>
+
+        <section class="panel effects-panel">
+          <h2>Efectos de voz</h2>
+          <p class="hint">Elige un efecto rapido o ajusta los controles manualmente. Tambien puedes abrir el menu <strong>Efectos</strong> en la barra superior.</p>
+
+          <div class="preset-grid" id="preset-grid">
+            <button class="preset active" data-effect="normal">Normal</button>
+            <button class="preset" data-effect="robot">Robot</button>
+            <button class="preset" data-effect="ardilla">Ardilla</button>
+            <button class="preset" data-effect="gigante">Gigante</button>
+            <button class="preset" data-effect="susurro">Susurro</button>
+            <button class="preset" data-effect="anciano">Anciano</button>
+            <button class="preset" data-effect="bebe">Bebe</button>
+            <button class="preset" data-effect="eco">Eco</button>
+          </div>
+
+          <div class="sliders">
+            <div class="slider-row">
+              <label for="rate">Velocidad</label>
+              <input type="range" id="rate" min="0.5" max="2" step="0.05" value="1" />
+              <span id="rate-value">1.00x</span>
+            </div>
+            <div class="slider-row">
+              <label for="pitch">Tono</label>
+              <input type="range" id="pitch" min="0" max="2" step="0.05" value="1" />
+              <span id="pitch-value">1.00</span>
+            </div>
+            <div class="slider-row">
+              <label for="volume">Volumen</label>
+              <input type="range" id="volume" min="0" max="1" step="0.05" value="1" />
+              <span id="volume-value">100%</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel more-effects">
+          <button class="collapsible" id="toggle-more">Mas efectos sugeridos ▾</button>
+          <div class="more-content" id="more-content" hidden>
+            <ul>
+              <li><strong>Eco real con retroalimentacion</strong> — repeticiones que se desvanecen gradualmente, en vez de una sola repeticion.</li>
+              <li><strong>Reverberacion (sala / catedral / estudio)</strong> — simula el espacio donde "suena" la voz.</li>
+              <li><strong>Filtro de telefono / radio antigua</strong> — recorta graves y agudos para sonar como una llamada o transmision vieja.</li>
+              <li><strong>Distorsion / autotune</strong> — efecto robotico mas realista tipo vocoder o correccion de tono.</li>
+              <li><strong>Coro (chorus)</strong> — varias copias de la voz ligeramente desafinadas para dar sensacion de grupo.</li>
+              <li><strong>Bajo el agua</strong> — filtro pasa-bajos con modulacion, sonido apagado y ondulante.</li>
+              <li><strong>Voz invertida</strong> — reproduce el audio generado al reves.</li>
+              <li><strong>Ecualizador manual</strong> — graves / medios / agudos ajustables con controles independientes.</li>
+            </ul>
+            <p class="hint">
+              Nota tecnica: los presets actuales (Robot, Ardilla, Gigante, etc.) usan velocidad, tono y volumen,
+              que es lo que expone la Web Speech API del sistema. Efectos como reverberacion, eco real o filtros de
+              frecuencia necesitan procesar la onda de audio generada (por ejemplo con Web Audio API sobre un motor
+              de voz que entregue el audio en bruto, o un servicio de voz en la nube). Quedan listados aqui como
+              siguientes pasos naturales para esta app.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
